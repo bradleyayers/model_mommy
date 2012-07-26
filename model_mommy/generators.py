@@ -10,14 +10,21 @@ callable (which will receive `field` as first argument), it should return a
 list in the format (key, value) where key is the argument name for generator
 and value is the value for that argument.
 """
-import datetime
 from decimal import Decimal
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import get_models
 from django.core.files.base import ContentFile
+import os
 from os.path import abspath, join, dirname
 from random import randint, choice, random
 import string
+
+try:
+    from django.utils.timezone import now
+except ImportError:
+    from datetime import datetime
+    now = datetime.now
+    del datetime
 
 
 MAX_LENGTH = 300
@@ -64,13 +71,15 @@ def gen_decimal(max_digits, decimal_places):
                               num_as_str(decimal_places)))
 gen_decimal.required = ['max_digits', 'decimal_places']
 
-gen_date = datetime.date.today
 
-gen_datetime = datetime.datetime.now
+gen_date = now().today
+
+
+gen_datetime = now
 
 
 def gen_time():
-    return datetime.datetime.now().time()
+    return now().time()
 
 
 def gen_string(max_length):
@@ -96,7 +105,7 @@ def gen_url():
 
 
 def gen_email():
-    return "%s@example.com" % gen_string(10)
+    return "%s@example.com" % gen_slug(10)
 
 
 def gen_content_type():
