@@ -72,7 +72,7 @@ def gen_decimal(max_digits, decimal_places):
 gen_decimal.required = ['max_digits', 'decimal_places']
 
 
-gen_date = now().today
+gen_date = now().date
 
 
 gen_datetime = now

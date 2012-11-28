@@ -99,6 +99,7 @@ class DateFieldsFilling(FieldFillingTestCase):
         self.assertIsInstance(birthday_field, DateField)
 
         self.assertIsInstance(self.person.birthday, date)
+        self.assertNotIsInstance(self.person.birthday, datetime)
 
 
 class DateTimeFieldsFilling(FieldFillingTestCase):
